@@ -1,0 +1,13 @@
+current directory: /Users/vansh/Documents/Projects/Mamalift/itweak/vendor/bundle/ruby/2.7.0/gems/json-2.6.3/ext/json
+/Users/vansh/.rvm/rubies/ruby-2.7.5/bin/ruby -I /Users/vansh/.rvm/rubies/ruby-2.7.5/lib/ruby/2.7.0 -r ./siteconf20230513-11038-wzi8c5.rb extconf.rb
+creating Makefile
+
+current directory: /Users/vansh/Documents/Projects/Mamalift/itweak/vendor/bundle/ruby/2.7.0/gems/json-2.6.3/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/vansh/Documents/Projects/Mamalift/itweak/vendor/bundle/ruby/2.7.0/gems/json-2.6.3/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/vansh/Documents/Projects/Mamalift/itweak/vendor/bundle/ruby/2.7.0/gems/json-2.6.3/ext/json
+make "DESTDIR=" install
