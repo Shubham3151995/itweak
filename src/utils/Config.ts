@@ -5,12 +5,14 @@ export default {
   // },
 
   fonts: {
-    BOLD: 'Poppins-Bold',
-    SEMI_BOLD: Platform.OS == 'ios' ? 'Poppins-SemiBold' : 'Poppins-SemiBold',
-    MEDIUM: 'Poppins-Medium',
-    REGULAR: 'Poppins-Regular',
-    LightItalic: 'Poppins-LightItalic',
-    LIGHT: 'Poppins-Light'
+    BOLD: 'BigShouldersDisplay-Bold',
+    SEMI_BOLD: "BigShouldersDisplay-SemiBold",
+    MEDIUM: 'BigShouldersDisplay-Medium',
+    REGULAR: 'BigShouldersDisplay-Regular',
+    ExtraLight: 'BigShouldersDisplay-ExtraLight',
+    LIGHT: 'BigShouldersDisplay-Light',
+    ExtraBold:"BigShouldersDisplay-ExtraBold",
+    Thin:'BigShouldersDisplay-Thin'
   },
   colors: {
     AppColor: "#FF009A",
@@ -20,7 +22,8 @@ export default {
     fontGray: '#888C96',
     lightYellow: '#FFF8F2',
     lightGray: '#F2EEEB',
-    black: '#000000'
+    black: '#000000',
+    secondAppColor:'#60FAFF'
     // secondaryColor:'#FFF8F2'
   },
 

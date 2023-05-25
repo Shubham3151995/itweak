@@ -26,7 +26,26 @@ const HOC = (ChildComponent: React.FC): React.FC => {
         
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Config.colors.AppColor,paddingHorizontal:scale(10) }}>
+                
                 <StatusBar translucent backgroundColor={Config.colors.white} barStyle="dark-content" />
+                <View style={
+                    {
+                        width:scale(130),
+                        height:"100%",
+                        backgroundColor:Config.colors.secondAppColor,
+                        position:'absolute',
+                        left:scale(-10)
+
+                    }}></View>
+                     <View style={
+                    {
+                        width:scale(130),
+                        height:"50%",
+                        backgroundColor:Config.colors.white,
+                        position:'absolute',
+                        left:scale(-10)
+
+                    }}></View>
                 <ChildComponent />
 
                 {/* {loadingStatus ? <LoadingComp /> : null} */}

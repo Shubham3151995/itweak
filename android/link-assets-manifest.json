@@ -1,0 +1,41 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/BigShouldersDisplay-Black.ttf",
+      "sha1": "9f913ee13739b67b5053bac37902a413d2070121"
+    },
+    {
+      "path": "assets/fonts/BigShouldersDisplay-Bold.ttf",
+      "sha1": "81374bc8fbb1da1e288772602781aec7654eab34"
+    },
+    {
+      "path": "assets/fonts/BigShouldersDisplay-ExtraBold.ttf",
+      "sha1": "eb70435ec32c981643911cebec40519682c512ea"
+    },
+    {
+      "path": "assets/fonts/BigShouldersDisplay-ExtraLight.ttf",
+      "sha1": "4d7e86ec2975a9e9a9f706033420607d889c1f0b"
+    },
+    {
+      "path": "assets/fonts/BigShouldersDisplay-Light.ttf",
+      "sha1": "640d781709a9916beb9b1e1b3441e6e078539d07"
+    },
+    {
+      "path": "assets/fonts/BigShouldersDisplay-Medium.ttf",
+      "sha1": "cc4891f9c9ba983fafb55cebafe4dc4c519a6658"
+    },
+    {
+      "path": "assets/fonts/BigShouldersDisplay-Regular.ttf",
+      "sha1": "3c12d5929e382f9e51e5c72d6a8a08f0d3b18695"
+    },
+    {
+      "path": "assets/fonts/BigShouldersDisplay-SemiBold.ttf",
+      "sha1": "a5786e8fe01b2d2957d8b9e0fa42e37267932374"
+    },
+    {
+      "path": "assets/fonts/BigShouldersDisplay-Thin.ttf",
+      "sha1": "3d9613ef909ba8d92938264101518a5e501c0148"
+    }
+  ]
+}
