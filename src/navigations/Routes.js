@@ -1,6 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import SpleshScreen from "../Screens/SpleshScreen";
 import LoginScreen from "../Screens/LoginScreen";
+import SignUp from "../Screens/SignUp";
+import ResetPassword from "../Screens/ResetPassword";
+import CreateProfile from "../Screens/CreateProfile";
+import EditProfile from "../Screens/EditProfile";
+import UploadVideo from "../Screens/UploadVideo";
 import { screenWidth } from "../utils/Helpers";
 
 const Stack = createStackNavigator();
@@ -29,6 +34,12 @@ function Routes() {
     >
       <Stack.Screen name="SpleshScreen" component={SpleshScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen name="CreateProfile" component={CreateProfile} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="UploadVideo" component={UploadVideo} />
+
     </Stack.Navigator>
   );
 }

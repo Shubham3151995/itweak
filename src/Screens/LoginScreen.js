@@ -13,10 +13,15 @@ import Config from "../utils/Config";
 import TextInputComp from "../Reuse/TextInputComp";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Button from "../Reuse/Button";
+import SignUp from "./SignUp";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import Modal from '../Reuse/Modal'
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
   let passwordRef = useRef();
   return (
     <KeyboardAwareScrollView
@@ -42,9 +47,9 @@ const LoginScreen = () => {
         </View>
 
         <View style={styles.EmailPasswordView}>
-          <Text style={styles.text}>Email</Text>
+          <Text style={styles.text}>EMAIl</Text>
           <TextInputComp
-            placeholder="ENTER EMAIL ADDRESS"
+            placeholder="Enter Email Address"
             value={email}
             onChangeText={(txt) => setEmail(txt)}
             keyboardType={"email-address"}
@@ -58,7 +63,7 @@ const LoginScreen = () => {
           </Text>
           <TextInputComp
             secureTextEntry={true}
-            placeholder="ENTER PASSWORD"
+            placeholder="Enter Password"
             value={password}
             onChangeText={(txt) => setPassword(txt)}
             keyboardType={"email-address"}
@@ -69,7 +74,9 @@ const LoginScreen = () => {
               Keyboard.dismiss();
             }}
           />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ResetPassword")}
+          >
             <Text
               style={[
                 styles.text,
@@ -83,13 +90,17 @@ const LoginScreen = () => {
         </View>
         <View style={styles.bottomView}>
           <Text style={[styles.text]}>DON'T HAVE AN ACCOUNT ? </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SignUp")}>
             <Text style={[styles.text, { color: Config.colors.AppColor }]}>
               SIGN UP
             </Text>
           </TouchableOpacity>
         </View>
       </View>
+      {/* <Modal
+        isVisible={true}
+      /> */}
     </KeyboardAwareScrollView>
   );
 };
