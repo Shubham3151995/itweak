@@ -7,6 +7,7 @@ import CreateProfile from "../Screens/CreateProfile";
 import EditProfile from "../Screens/EditProfile";
 import UploadVideo from "../Screens/UploadVideo";
 import { screenWidth } from "../utils/Helpers";
+import HomeScreen from "../Screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -39,7 +40,7 @@ function Routes() {
       <Stack.Screen name="CreateProfile" component={CreateProfile} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="UploadVideo" component={UploadVideo} />
-
+      <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>
   );
 }

@@ -15,8 +15,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Button from "../Reuse/Button";
 import SignUp from "./SignUp";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Modal from '../Reuse/Modal'
-
+import Modal from "../Reuse/Modal";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -90,8 +89,7 @@ const LoginScreen = () => {
         </View>
         <View style={styles.bottomView}>
           <Text style={[styles.text]}>DON'T HAVE AN ACCOUNT ? </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SignUp")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
             <Text style={[styles.text, { color: Config.colors.AppColor }]}>
               SIGN UP
             </Text>
