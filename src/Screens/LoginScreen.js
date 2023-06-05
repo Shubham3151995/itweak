@@ -85,7 +85,13 @@ const LoginScreen = () => {
               Forgot Password?
             </Text>
           </TouchableOpacity>
-          <Button text={"SIGN IN"} style={{ marginTop: verticalScale(20) }} />
+          <Button
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+            text={"SIGN IN"}
+            style={{ marginTop: verticalScale(20) }}
+          />
         </View>
         <View style={styles.bottomView}>
           <Text style={[styles.text]}>DON'T HAVE AN ACCOUNT ? </Text>

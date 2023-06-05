@@ -6,6 +6,7 @@ import {
   Image,
   Keyboard,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import HOC from "../HOC";
 import { scale, verticalScale } from "react-native-size-matters";
@@ -23,6 +24,76 @@ const HomeScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   let passwordRef = useRef();
+
+  const data = [
+    {
+      title: "Have twerk challenge",
+      image: require("../assets/video/Rectangle508.png"),
+    },
+    {
+      title: "Video title",
+      image: require("../assets/video/Rectangle507.png"),
+    },
+    {
+      title: "Video title",
+      image: require("../assets/video/Rectangle511.png"),
+    },
+    {
+      title: "Video title",
+      image: require("../assets/video/Rectangle513.png"),
+    },
+    {
+      title: "Video title",
+      image: require("../assets/video/Rectangle515.png"),
+    },
+    {
+      title: "Video title",
+      image: require("../assets/video/Rectangle517.png"),
+    },
+  ];
+
+  const Component = ({ item, index }) => {
+    console.log("===>", item, index % 2 === 0, index);
+    return (
+      <View
+        style={{
+          // width: "42%",
+          marginLeft: 10,
+          alignItems: "center",
+          marginBottom: verticalScale(10),
+          // marginLeft: index % 2 === 0 ? scale(30) : 0,
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: "black",
+            alignItems: "center",
+            paddingHorizontal: scale(10),
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            source={item.image}
+            style={{ width: scale(110), height: verticalScale(180) }}
+            // resizeMode="contain"
+          />
+          <Image
+            source={require("../assets/images/play-button10.png")}
+            style={{
+              width: scale(30),
+              height: verticalScale(30),
+              position: "absolute",
+            }}
+            // resizeMode="contain"
+          />
+        </View>
+
+        <Text style={{ fontStyle: Config.fonts.REGULAR, color: "black" }}>
+          {item.title}
+        </Text>
+      </View>
+    );
+  };
   return (
     <View style={styles.mainView}>
       <View style={{ alignItems: "center", width: "100%" }}>
@@ -36,7 +107,27 @@ const HomeScreen = () => {
           style={styles.imageView2}
           resizeMode="contain"
         />
-        <Text style={styles.textHEading}>SIGN IN TO CONTINUE </Text>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          marginTop: verticalScale(30),
+          paddingBottom: verticalScale(50),
+        }}
+      >
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => {
+            index;
+          }}
+          renderItem={Component}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: "center",
+            marginBottom: verticalScale(50),
+          }}
+        />
       </View>
       <View
         style={{
