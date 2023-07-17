@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laundry Hero</title>
+</head>
+
+<body style="margin:0;">
+  <div style="max-width:750px; margin:auto; ">
+    <div
+      style="display:flex; align-items: center;justify-content: space-between; padding-bottom: 20px; padding-top:20px; margin-bottom:15px;   border-bottom: 2px solid rgb(232 232 232 / 53%) ;">
+      <div><img style="max-width:80px; vertical-align: middle;" src="<%= baseUrl %>/public/images/logo.png"></div>
+      <div>
+        <h4 style="font-size: 30px;font-weight: 700;color:#000;text-transform: uppercase;margin: 0 0 10px 0;">invoice</h4>
+        <p style="margin: 0;font-size: 16px;text-align: right;font-weight: 400;"><strong>Issued:</strong> <%= moment().format("MMM DD YYYY") %> </p>
+      </div>
+    </div>
+    <h3 style="font-size: 18px;font-weight: 400;color: #000;margin:0 0 10px 0;">Bill to:</h3>
+    <p style="margin: 0;font-size: 16px;font-weight: 400;padding-bottom: 20px;color: #000;border-bottom: 2px solid rgb(232 232 232 / 53%);">
+      (Business Account Manager <%= businessAccount.bussinessName%>)
+    </p>
+    <table style="width: 100%; border-collapse: collapse; margin-top:30px;">
+      <tr>
+        <th style="padding:15px 10px; text-transform: uppercase; text-align: left; background-color: #f1f1f1; font-size: 14px; font-weight:600;color:#000; ">
+          customer name <img style="max-width: 10px;vertical-align: middle;margin-left:5px;" src="<%= baseUrl %>/public/images/arrow.png" ></th>
+        <th style="padding:15px 10px; text-transform:  uppercase; text-align: left;background-color: #f1f1f1; font-size: 14px; font-weight:600;color:#000; ">
+          order id <img style="max-width: 10px;vertical-align: middle;margin-left:5px;" src="<%= baseUrl %>/public/images/arrow.png">
+        </th>
+        <th style="padding:15px 10px; text-transform: uppercase;text-align: left; background-color: #f1f1f1; font-size: 14px; font-weight:600;color:#000; ">
+          date <img style="max-width: 10px;vertical-align: middle;margin-left:5px;" src="<%= baseUrl %>/public/images/arrow.png">
+        </th>
+        <th style="padding:15px 10px; text-transform: uppercase; text-align: left; background-color: #f1f1f1; font-size: 14px; font-weight:600;color:#000; ">
+          status <img style="max-width: 10px;vertical-align: middle;margin-left:5px;" src="<%= baseUrl %>/public/images/arrow.png">
+        </th>
+        <th style="padding:15px 10px; text-transform: uppercase; text-align: left; background-color: #f1f1f1; font-size: 14px; font-weight:600;color:#000; ">
+          amount <img style="max-width: 10px;vertical-align: middle;margin-left:5px;" src="<%= baseUrl %>/public/images/arrow.png">
+        </th>
+      </tr>
+      <% if (payments?.length > 0) { 
+        let total = 0;
+      %>
+      <tbody>
+        <% payments.forEach(payment => {
+          total += payment.amount
+          let imgUrl = baseUrl+'/public/images/no-available-image.png';
+          if( payment.customerId?.profilePicture?.url) {
+            imgUrl = payment.customerId.profilePicture.url;
+          }
+        %>
+        <tr>
+          <td style="padding:10px 20px; font-size: 14px;border-bottom: 2px solid rgb(232 232 232 / 53%) ;">
+            <div style="display: flex;align-items: center;">
+              <div><img style="max-width: 40px;border-radius: 100px;height: 40px;object-fit: cover;" src="<%= imgUrl %>"></div>
+              <div style="padding-left:10px;">
+                <h4 style="margin: 0 0 5px 0;font-size: 14px;font-weight: 400;"><%= payment.customerId.firstName ? payment.customerId.firstName+" "+payment.customerId.lastName : "" %></h4>
+                <h5 style="margin: 0;font-size: 14px;color:  #c3c2c2;font-weight: 400;"><%= payment.customerId.email %></h5>
+              </div>
+            </div>
+          </td>
+          <td style="padding:10px 20px; font-size: 14px;border-bottom: 2px solid rgb(232 232 232 / 53%) ;">#<%= payment.orderId._id %>
+          </td>
+          <td style="padding:10px 20px; font-size: 14px;border-bottom: 2px solid rgb(232 232 232 / 53%) ;">
+            <h4 style="margin: 0 0 5px 0;font-size: 14px;font-weight: 400;"> <%= moment(payment.createdAt).format('DD/MM/YYYY'); %></h4>
+            <h5 style="margin: 0;font-size: 14px;font-weight: 400;color:  #c3c2c2;"><%= moment(payment.createdAt).format('hh-mm-ss A'); %></h5>
+          </td>
+          <td style="padding:10px 20px; font-size: 14px;border-bottom: 2px solid rgb(232 232 232 / 53%) ;">
+            <a style="background: #f9cc55;color: #fff;display: inline-block;text-decoration: none;font-size: 16px;padding: 7px 20px;border-radius: 100px;font-weight: 400;" href="#"><%=payment.status %></a></td>
+          <td style="padding:10px 20px; font-size: 14px;border-bottom: 2px solid rgb(232 232 232 / 53%) ;">
+            <%= "$ "+payment.amount %>
+          </td>
+        </tr>
+        <%  });%>
+      </tbody>
+      <tfooter>
+        <tr>
+          <td colspan="4" style="padding:10px 20px;background: #f1f1f1; font-size: 16px;">
+            <strong> Total</strong>
+          </td>
+          <td style="background: #f1f1f1; padding: 10px 20px; font-size: 16px;">
+            <strong><%= "$ "+total.toFixed(2) %></strong>
+          </td>
+        </tr>
+      </tfooter>
+      <% }%>
+    </table>
+  </div>
+</body>
+
+</html>

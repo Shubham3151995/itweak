@@ -1,42 +1,64 @@
 {
-  "name": "itweak",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest"
-  },
-  "dependencies": {
-    "@react-native-masked-view/masked-view": "^0.2.9",
-    "@react-navigation/native": "^6.1.6",
-    "@react-navigation/stack": "^6.3.16",
-    "react": "18.2.0",
-    "react-native": "0.71.8",
-    "react-native-gesture-handler": "^2.10.0",
-    "react-native-safe-area-context": "^4.5.2",
-    "react-native-screens": "^3.20.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/preset-env": "^7.20.0",
-    "@babel/runtime": "^7.20.0",
-    "@react-native-community/eslint-config": "^3.2.0",
-    "@tsconfig/react-native": "^2.0.2",
-    "@types/jest": "^29.2.1",
-    "@types/react": "^18.0.24",
-    "@types/react-test-renderer": "^18.0.0",
-    "babel-jest": "^29.2.1",
-    "eslint": "^8.19.0",
-    "jest": "^29.2.1",
-    "metro-react-native-babel-preset": "0.73.9",
-    "prettier": "^2.4.1",
-    "react-test-renderer": "18.2.0",
-    "typescript": "4.8.4"
-  },
-  "jest": {
-    "preset": "react-native"
-  }
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prepare": "husky install",
+		"dev": "nodemon index.js"
+	},
+	"lint-staged": {
+		"**/*.js": "prettier --write --ignore-unknown"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"eslint": "^8.24.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"husky": "^8.0.3",
+		"lint-staged": "^13.0.3",
+		"mongoose-to-swagger": "^1.4.0",
+		"nodemon": "^2.0.20",
+		"prettier": "2.7.1",
+		"swagger-ui-express": "^4.5.0"
+	},
+	"dependencies": {
+		"@sendgrid/mail": "^7.7.0",
+		"agora-token": "^2.0.3",
+		"aws-sdk": "^2.1231.0",
+		"bcrypt": "^5.0.1",
+		"body-parser": "^1.20.1",
+		"cloudinary": "^1.32.0",
+		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
+		"dotenv": "^16.0.2",
+		"ejs": "^3.1.9",
+		"express": "^4.18.1",
+		"express-fileupload": "^1.4.0",
+		"fcm-node": "^1.6.1",
+		"fs": "^0.0.1-security",
+		"handlebars": "^4.7.7",
+		"html-pdf": "^3.0.1",
+		"joi": "^17.9.2",
+		"jsonwebtoken": "^8.5.1",
+		"messagebird": "^3.8.1",
+		"moment": "^2.29.4",
+		"moment-timezone": "^0.5.43",
+		"mongoose": "^6.6.2",
+		"multer": "^1.4.5-lts.1",
+		"node-geocoder": "^4.2.0",
+		"nodemailer": "^6.9.3",
+		"nodemailer-smtp-transport": "^2.7.4",
+		"puppeteer-html-pdf": "^2.1.1",
+		"react-loading": "^2.0.3",
+		"stripe": "^10.14.0",
+		"twilio": "^3.83.1",
+		"util": "^0.12.4",
+		"uuid": "^9.0.0",
+		"validator": "^13.7.0"
+	}
 }

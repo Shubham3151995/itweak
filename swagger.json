@@ -1,0 +1,1583 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Docs",
+    "description": "RESTAPI Documentations",
+    "version": "0.0.1"
+  },
+  "components": {
+    "schemas": {
+      "Unauthrized": {
+        "title": "Unauthrized",
+        "required": ["statusCode", "message"],
+        "properties": {
+          "statusCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseSchema": {
+        "title": "ResponseSchema",
+        "required": ["statusCode", "message"],
+        "properties": {
+          "statusCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseAccessTokenSchema": {
+        "title": "ResponseAccessTokenSchema",
+        "required": ["statusCode", "message"],
+        "properties": {
+          "statusCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateOrderSchema": {
+        "title": "CreateOrderSchema",
+        "required": ["customer", "hero", "bags", "timeSlot", "address"],
+        "properties": {
+          "customer": { "type": "string" },
+          "hero": { "type": "string" },
+          "bags": {
+            "type": "object",
+            "properties": {
+              "number": { "type": "number" }
+            }
+          },
+          "timeSlot": {
+            "type": "object",
+            "properties": {
+              "startTime": { "type": "string", "format": "date-time" },
+              "endTime": { "type": "string", "format": "date-time" }
+            }
+          },
+          "repeat": {
+            "type": "string",
+            "enum": ["WEEKLY", "MONTHLY", "DAILY"]
+          },
+          "address": { "type": "string" },
+          "anySpecialInstructions": { "type": "string" },
+          "promoCode": { "type": "object", "properties": {} }
+        }
+      },
+      "UpdateOrderSchema": {
+        "title": "UpdateOrderSchema",
+        "required": [],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "RECEIVED",
+              "OUT_FOR_PICKUP",
+              "OUT_FOR_DELIVERY",
+              "COLLECTED",
+              "COMPLETED",
+              "CANCELLED"
+            ]
+          },
+          "orderDeliveryDate": { "type": "string", "format": "date-time" },
+          "hero": { "type": "string" },
+          "bags": {
+            "type": "object",
+            "properties": {
+              "number": { "type": "number" }
+            }
+          },
+          "timeSlot": {
+            "type": "object",
+            "properties": {
+              "startTime": { "type": "string", "format": "date-time" },
+              "endTime": { "type": "string", "format": "date-time" }
+            }
+          },
+          "repeat": {
+            "type": "string",
+            "enum": ["WEEKLY", "MONTHLY", "DAILY"]
+          },
+          "address": { "type": "string" },
+          "expectedDelivery": {
+            "type": "string",
+
+            "format": "date-time"
+          },
+          "actualDelivery": {
+            "type": "string",
+
+            "format": "date-time"
+          }
+        }
+      },
+      "VerifySchema": {
+        "title": "VerifySchema",
+        "required": ["otp", "password"],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "otp": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserUpdateSchema": {
+        "title": "UserUpdateSchema",
+        "required": ["email", "phone"],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      },
+      "updateContactSchema": {
+        "title": "updateContactSchema",
+        "required": ["phoneOTP", "emailOTP"],
+        "properties": {
+          "phoneOTP": {
+            "type": "string"
+          },
+          "emailOTP": {
+            "type": "string"
+          }
+        }
+      },
+      "addPreferenceFieldSchema": {
+        "title": "addPreferenceFieldSchema",
+        "required": ["name", "options", "status", "specialInstruction"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "options": { "type": "array", "items": { "type": "string" } },
+          "status": {
+            "type": "boolean"
+          },
+          "specialInstruction": {
+            "type": "boolean"
+          }
+        }
+      },
+      "addUserPreferenceSchema": {
+        "title": "addUserPreferenceSchema",
+        "required": ["id", "option", "specialInstruction"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "option": { "type": "string" },
+          "specialInstruction": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RegisterSchema": {
+        "title": "RegisterSchema",
+        "required": ["password", "role"],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "title": "User",
+        "required": ["password", "verification"],
+        "properties": {
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "password": { "type": "string" },
+          "role": {
+            "type": "string",
+            "enum": ["ADMINISTRATOR", "CONSUMER", "LAUNDRY_HERO"]
+          },
+          "preferences": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "preferenceId": { "type": "string" },
+                "name": { "type": "string" },
+                "option": { "type": "string" },
+                "specialInstruction": { "type": "string" }
+              }
+            }
+          },
+          "address": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "city": { "type": "string" },
+                "zipCode": { "type": "number" },
+                "streetName": { "type": "string" },
+                "streetNumber": { "type": "number" },
+                "apartmentNo": { "type": "number" },
+                "floor": { "type": "number" },
+                "specialNote": { "type": "string" }
+              },
+              "required": [
+                "city",
+                "zipCode",
+                "streetName",
+                "streetNumber",
+                "apartmentNo",
+                "floor"
+              ]
+            }
+          },
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "profilePicture": {
+            "type": "object",
+            "properties": {
+              "public_id": { "type": "string" },
+              "url": { "type": "string" },
+              "bucket": { "type": "string" }
+            }
+          },
+          "referralCode": { "type": "string" },
+          "favoriteHeros": {
+            "type": "array",
+
+            "items": { "type": "string" }
+          },
+          "additionalInstruction": {
+            "type": "array",
+
+            "items": { "type": "string" }
+          },
+          "pronouns": {
+            "type": "string",
+            "enum": ["HE", "SHE", "PREFER_NOT_TO_SAY"]
+          },
+          "dob": { "type": "string", "format": "date-time" },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "SUSPENDED",
+              "ARCHIVED",
+              "MARKED_FOR_DELETION",
+              "SIGNED_UP"
+            ]
+          },
+          "otp": {
+            "type": "object",
+
+            "properties": {
+              "emailOTP": { "type": "number" },
+              "phoneOTP": { "type": "number" },
+              "_id": { "type": "string" }
+            }
+          },
+          "verification": {
+            "type": "object",
+            "properties": {
+              "emailVerified": { "type": "boolean" },
+              "phoneVerified": { "type": "boolean" },
+              "_id": { "type": "string" }
+            }
+          },
+          "totalOrders": { "type": "number" },
+          "laundryHeroStatus": {
+            "type": "string",
+            "enum": ["PENDING", "VERIFIED"]
+          },
+          "_id": { "type": "string" },
+          "updatedAt": { "type": "string", "format": "date-time" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Order": {
+        "title": "Order",
+        "required": [
+          "orderDate",
+          "orderDeliveryDate",
+          "customer",
+          "hero",
+          "preferences"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "PAYMENT_PENDING",
+              "RECEIVED",
+              "OUT_FOR_PICKUP",
+              "OUT_FOR_DELIVERY",
+              "COLLECTED",
+              "COMPLETED",
+              "CANCELLED"
+            ]
+          },
+          "orderDate": { "type": "string", "format": "date-time" },
+          "orderDeliveryDate": { "type": "string", "format": "date-time" },
+          "customer": { "type": "string" },
+          "hero": { "type": "string" },
+          "territory": { "type": "string" },
+          "transactionDetails": {
+            "type": "object",
+            "properties": {
+              "transactionId": { "type": "string" },
+              "paymentGateway": { "type": "string" },
+              "transactionAmount": { "type": "number" },
+              "paymentStatus": { "type": "string" }
+            }
+          },
+          "bags": {
+            "type": "object",
+            "properties": {
+              "number": { "type": "number" },
+              "charge": { "type": "number" }
+            }
+          },
+          "timeSlot": {
+            "type": "object",
+            "properties": {
+              "startTime": { "type": "string", "format": "date-time" },
+              "endTime": { "type": "string", "format": "date-time" }
+            }
+          },
+          "preferences": {
+            "type": "array",
+            "items": { "type": "object", "properties": {}, "required": [] }
+          },
+          "repeat": {
+            "type": "string",
+            "enum": ["WEEKLY", "MONTHLY", "DAILY"]
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "city": { "type": "string" },
+              "zipCode": { "type": "number" },
+              "streetName": { "type": "string" },
+              "streetNumber": { "type": "number" },
+              "apartmentNo": { "type": "number" },
+              "floor": { "type": "number" },
+              "specialNote": { "type": "string" }
+            }
+          },
+          "expectedDelivery": {
+            "type": "string",
+
+            "format": "date-time"
+          },
+          "actualDelivery": {
+            "type": "string",
+
+            "format": "date-time"
+          },
+          "anySpecialInstructions": { "type": "string" },
+          "promoCode": { "type": "object", "properties": {} },
+          "tip": { "type": "string" },
+          "deliveryCharge": { "type": "number" },
+          "platformFee": { "type": "number" },
+          "taxes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "taxName": { "type": "string" },
+                "amount": { "type": "number" }
+              },
+              "required": []
+            }
+          },
+          "subTotal": { "type": "number" },
+          "_id": { "type": "string" },
+          "updatedAt": { "type": "string", "format": "date-time" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Preference": {
+        "title": "Preference",
+        "required": ["name", "options", "status", "specialInstruction"],
+        "properties": {
+          "name": { "type": "string" },
+          "options": { "type": "array", "items": { "type": "string" } },
+          "status": { "type": "boolean" },
+          "specialInstruction": { "type": "boolean" },
+          "_id": { "type": "string" }
+        }
+      },
+      "loginWithSocialMediaSchema": {
+        "title": "loginWithSocialMediaSchema",
+        "required": ["email", "socialMediaId","socialMediaType","role","emailVerified"],
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "socialMediaId": {
+            "type": "string"
+          },
+          "socialMediaType": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "emailVerified": {
+            "type": "boolean"
+          },
+          "inviteId": {
+            "type": "string"
+          },
+          "referralCode": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "authorization": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/payment/customerAccount/{id}": {
+      "post": {
+        "tags": ["Payment"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "description": "Create Customer Account",
+        "responses": {
+          "200": {
+            "description": "Successfully added Customer to Stripe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getUserPreferenceSchema",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "object": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "object"
+                    },
+                    "balance": {
+                      "type": "number"
+                    },
+                    "created": {
+                      "type": "number"
+                    },
+                    "currency": {
+                      "type": "string"
+                    },
+                    "default_source": {
+                      "type": "string"
+                    },
+                    "delinquent": {
+                      "type": "boolean"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "discount": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "invoice_prefix": {
+                      "type": "string"
+                    },
+                    "invoice_settings": {
+                      "type": "object"
+                    },
+                    "livemode": {
+                      "type": "boolean"
+                    },
+                    "metadata": {
+                      "type": "object"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "next_invoice_sequence": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "preferred_locales": {
+                      "type": "array"
+                    },
+                    "shipping": {
+                      "type": "string"
+                    },
+                    "tax_exempt": {
+                      "type": "string"
+                    },
+                    "test_clock": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/createOrder": {
+      "post": {
+        "tags": ["Order"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderSchema"
+              }
+            }
+          }
+        },
+        "description": "Add preference to the field",
+        "responses": {
+          "200": {
+            "description": "Successfully created order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CreateOrderSchema"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "All fields are required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/updateOrder/{id}": {
+      "put": {
+        "tags": ["Order"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Order id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrderSchema"
+              }
+            }
+          }
+        },
+        "description": "List all posts",
+        "responses": {
+          "200": {
+            "description": "Successfully updated the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/getAllOrders": {
+      "get": {
+        "tags": ["Order"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "description": "List all Orders",
+        "responses": {
+          "200": {
+            "description": "Successfully fetched all the Orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/getOrder/{id}": {
+      "get": {
+        "tags": ["Order"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Order id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "description": "List all posts",
+        "responses": {
+          "200": {
+            "description": "Successfully fetched the Order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/getHistory/{id}": {
+      "get": {
+        "tags": ["Order"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "description": "List all posts",
+        "responses": {
+          "200": {
+            "description": "Successfully fetched Order History",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/getAllUsers": {
+      "get": {
+        "tags": ["User"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "description": "List all Users",
+        "responses": {
+          "200": {
+            "description": "Successfully fetched all the Users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/get/{id}": {
+      "get": {
+        "tags": ["User"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "description": "List all posts",
+        "responses": {
+          "200": {
+            "description": "Successfully fetched the User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/updateUser/{id}": {
+      "put": {
+        "tags": ["User"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdateSchema"
+              }
+            }
+          }
+        },
+        "description": "List all posts",
+        "responses": {
+          "200": {
+            "description": "Successfully updated the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/updateContact": {
+      "put": {
+        "tags": ["User"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateContactSchema"
+              }
+            }
+          }
+        },
+        "description": "List all posts",
+        "responses": {
+          "200": {
+            "description": "Successfully updated the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getAllPreferencesField": {
+      "get": {
+        "tags": ["Preferences"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "description": "List all Preference Field",
+        "responses": {
+          "200": {
+            "description": "Successfully fetched all the preference fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Preference"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Successfully fetched all the preference fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/addPreferenceField": {
+      "post": {
+        "tags": ["Preferences"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addPreferenceFieldSchema"
+              }
+            }
+          }
+        },
+        "description": "Add preference to the field",
+        "responses": {
+          "200": {
+            "description": "Successfully added the preference field",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Preference"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "All fields are required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/editPreferenceField{id}": {
+      "put": {
+        "tags": ["Preferences"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Preference id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addPreferenceFieldSchema"
+              }
+            }
+          }
+        },
+        "description": "Edit preference field",
+        "responses": {
+          "200": {
+            "description": "Successfully edited the preference field",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Preference"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deletePreferenceField/{id}": {
+      "delete": {
+        "tags": ["Preferences"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Preference id",
+            "required": true
+          }
+        ],
+        "description": "Add preferences",
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the preference field"
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/addUserPreference": {
+      "post": {
+        "tags": ["Preferences"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addUserPreferenceSchema"
+              }
+            }
+          }
+        },
+        "description": "Add preference to the field",
+        "responses": {
+          "200": {
+            "description": "Successfully added the preference field",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Preference"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "All fields are required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deleteUserPreference/{id}": {
+      "delete": {
+        "tags": ["Preferences"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Preference id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete preferences",
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the Preference",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preference"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getUserPreference/{id}": {
+      "get": {
+        "tags": ["Preferences"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Preference id",
+            "required": true
+          }
+        ],
+        "description": "Get user preference",
+        "responses": {
+          "200": {
+            "description": "Successfully get the single preference by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getUserPreferenceSchema",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "preferences": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/updateUserPreference/{id}": {
+      "put": {
+        "tags": ["Preferences"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Preference id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "getUserPreferenceSchema",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "option": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Add preferences",
+        "responses": {
+          "200": {
+            "description": "Successfully update the preferences"
+          },
+          "401": {
+            "description": "Unauthrized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthrized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterSchema"
+              }
+            }
+          }
+        },
+        "description": "Register",
+        "responses": {
+          "200": {
+            "description": "Successfully login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "description": "Register",
+        "responses": {
+          "200": {
+            "description": "Successfully logout"
+          }
+        }
+      }
+    },
+    "/refresh": {
+      "get": {
+        "tags": ["Auth"],
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "description": "Register",
+        "responses": {
+          "200": {
+            "description": "Successfully verify otp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/send-otp": {
+      "post": {
+        "tags": ["Auth"],
+        "description": "Register",
+        "responses": {
+          "200": {
+            "description": "Successfully send otp"
+          }
+        }
+      }
+    },
+    "/verify-otp": {
+      "post": {
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifySchema"
+              }
+            }
+          }
+        },
+        "description": "Register",
+        "responses": {
+          "200": {
+            "description": "Successfully verify otp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterSchema"
+              }
+            }
+          }
+        },
+        "description": "Register",
+        "responses": {
+          "200": {
+            "description": "Successfully register",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login-with-social-media": {
+      "post": {
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/loginWithSocialMediaSchema"
+              }
+            }
+          }
+        },
+        "description": "Register",
+        "responses": {
+          "200": {
+            "description": "Successfully login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
