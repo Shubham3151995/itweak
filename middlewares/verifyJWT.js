@@ -15,8 +15,9 @@ const verifyJWT = (req, res, next) => {
   const token = authHeader.split(" ")[1];
 
   // Verify extracted access token
-  jwt.verify(token, accessTokenSecret, async (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Forbidden" });
+  jwt.verify(token, "secret", async (err, decoded) => {
+    if (err)
+      return res.status(403).json({ message: "Forbidden" });
 
     const userData = decoded.data.contact;
     if (!userData) return res.sendStatus(404);

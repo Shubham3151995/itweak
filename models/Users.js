@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    reset_password_token: {
+    reset_password_otp: {
       type: Number,
       required: false,
     },
@@ -64,6 +64,70 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: false,
       },
+    },
+    paymentMethod: [
+      {
+        name: {
+          type: String,
+          required: false,
+        },
+        phone: {
+          type: Number,
+          required: false,
+        },
+        payment_method: {
+          type: String,
+          required: false,
+        },
+        cardNumber: {
+          type: String,
+          required: true,
+        },
+        expiry: {
+          type: String,
+          required: true,
+        },
+        methodId: {
+          type: String,
+          required: true,
+        },
+        brand: {
+          type: String,
+          required: true,
+        },
+        defaultCard: {
+          type: Boolean,
+        },
+      },
+    ],
+    subsriptionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subscription",
+      required: false,
+    },
+    subscription_price: {
+      type: Number,
+    },
+    subscribedAt: {
+      type: String,
+      default: new Date(),
+    },
+    subscription_expire_at: {
+      type: String,
+      default: null,
+    },
+    is_subscription_buy: {
+      type: Boolean,
+      default: false,
+    },
+    subscription_plan_type: {
+      type: String,
+    },
+    stripSupcriptionId: {
+      type: String,
+    },
+    subscriptionPlanStatus: {
+      type: Boolean,
     },
   },
 
@@ -167,41 +231,7 @@ module.exports = mongoose.model("User", userSchema);
 //     },
 //   },
 // ],
-// paymentMethod: [
-//   {
-//     name: {
-//       type: String,
-//       required: false,
-//     },
-//     phone: {
-//       type: Number,
-//       required: false,
-//     },
-//     payment_method: {
-//       type: String,
-//       required: false,
-//     },
-//     cardNumber: {
-//       type: String,
-//       required: true,
-//     },
-//     expiry: {
-//       type: String,
-//       required: true,
-//     },
-//     methodId: {
-//       type: String,
-//       required: true,
-//     },
-//     brand: {
-//       type: String,
-//       required: true,
-//     },
-//     defaultCard: {
-//       type: Boolean,
-//     },
-//   },
-// ],
+
 // notification: {
 //   app: {
 //     type: Boolean,

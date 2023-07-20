@@ -6,8 +6,8 @@ dotenv.config();
 const {
   PORT,
   DATABASE_URI,
-  // STRIPE_TEST_SECRET_KEY,
-  // STRIPE_TEST_PUBLIC_KEY,
+  STRIPE_TEST_SECRET_KEY,
+  STRIPE_TEST_PUBLIC_KEY,
 } = process.env;
 
 // PORT and DATABASE_URI is required
@@ -17,6 +17,6 @@ assert(DATABASE_URI, "DATABASE_URI is required");
 module.exports = {
   port: PORT,
   dbString: DATABASE_URI,
-  // stripeTestSecretKey: STRIPE_TEST_SECRET_KEY,
-  // stripeTestPublicKey: STRIPE_TEST_PUBLIC_KEY,
+  stripeTestSecretKey: STRIPE_TEST_SECRET_KEY,
+  stripeTestPublicKey: STRIPE_TEST_PUBLIC_KEY,
 };

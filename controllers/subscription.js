@@ -1,5 +1,5 @@
 const Subscription = require("../models/Subscription");
-const BusinessAccount = require("../models/BusinessAccount");
+const User = require("../models/Users");
 const { ObjectId } = require("mongodb");
 const moment = require("moment");
 const { stripeTestSecretKey } = require("../config/appConfig");
@@ -8,59 +8,44 @@ const {
   createStripeProduct,
   createStripeProductPrice,
   deleteStripeProduct,
+  stripeSubcription
 } = require("../services/stripe");
 
 const createSubscription = async (req, res) => {
   try {
-    console.log("inside");
-    if (req.role === "ADMINISTRATOR") {
-      const {
-        name,
-        price,
-        priceGroup,
-        bags,
-        description,
-        duration,
-        nestedAcc,
-        discount,
-        minimumOrder,
-        minimumOrderDiscount,
-        status,
-      } = req.body;
+    const {
+      name,
+      price,
+      description,
+      duration,
+      status
+    } = req.body;
 
-      let subscription = new Subscription({
-        name,
-        price,
-        priceGroup,
-        bags,
-        description,
-        duration,
-        nestedAcc,
-        discount,
-        minimumOrder,
-        minimumOrderDiscount,
-        status,
-      });
-      let stripeProduct = await createStripeProduct(name);
-      let stripeProductPrice = await createStripeProductPrice(
-        price,
-        duration,
-        stripeProduct.id
-      );
-      if (stripeProduct && stripeProductPrice) {
-        subscription.stripeProductId = stripeProduct.id;
-        subscription.stripeProductPriceId = stripeProductPrice.id;
-        let result = await subscription.save();
-        if (!result) {
-          res.status(400).send("Something went wrong");
-        }
-        res.status(200).send(result);
-      } else {
+    let subscription = new Subscription({
+      name,
+      price,
+      description,
+      duration,
+      status
+    });
+    let stripeProduct = await createStripeProduct(name);
+    let stripeProductPrice = await createStripeProductPrice(
+      price,
+      duration,
+      stripeProduct.id
+    );
+    if (stripeProduct && stripeProductPrice) {
+      subscription.stripeProductId = stripeProduct.id;
+      subscription.stripeProductPriceId = stripeProductPrice.id;
+      let result = await subscription.save();
+      if (!result) {
         res.status(400).send("Something went wrong");
       }
+      res.status(200).send(result);
     } else {
-      res.status(400).send({ error: "Admin Permission required" });
+      res.status(400).send("Something went wrong");
     }
+
   } catch (err) {
     res.status(400).send(err);
   }
@@ -85,32 +70,11 @@ const subscriptiondetail = async (req, res) => {
 
 const getAllSubscription = async (req, res) => {
   try {
-    let subscription;
-    if (req.role === "ADMINISTRATOR") {
-      if (req.query.status != undefined && req.query.name != undefined) {
-        subscription = await Subscription.find({
-          $and: [{ name: req.query.name }, { status: req.query.status }],
-        });
-      } else if (req.query.status != undefined) {
-        subscription = await Subscription.find({ status: req.query.status });
-      } else if (req.query.name != undefined) {
-        subscription = await Subscription.find({ name: req.query.name });
-      } else {
-        subscription = await Subscription.find();
-      }
-      if (subscription) {
-        return res.status(200).send(subscription);
-      } else {
-        return res.status(200).send({ error: "subscription not found" });
-      }
-    }
-    if (req.role === "CONSUMER") {
-      subscription = await Subscription.find();
-      if (subscription && subscription.length > 0) {
-        return res.status(200).send(subscription);
-      } else {
-        return res.status(200).send({ error: "subscription not found" });
-      }
+    let subscription = await Subscription.find();
+    if (subscription && subscription.length > 0) {
+      return res.status(200).send(subscription);
+    } else {
+      return res.status(200).send({ error: "subscription not found" });
     }
   } catch (err) {
     return res.status(400).send({ error: err.message });
@@ -264,42 +228,40 @@ const buySubscription = async (req, res) => {
     const {
       subsriptionId,
       subscription_name,
-      buisness_owner_id,
-      subscription_plan_type,
     } = req.body;
+    let user = await User.find({ userId: req.id });
     let subscriptionDetails = await Subscription.findById(subsriptionId);
+    let stripeDataDetail = await stripeSubcription(
+      user[0].stripeCustomerId,
+      subscriptionDetails.stripeProductPriceId
+    );
     subscriptionDetails.price = subscriptionDetails.price
       ? subscriptionDetails.price
       : 0;
     req.body.subscription_price = subscriptionDetails.price;
     const subscription_price = req.body.subscription_price;
-    let buisnessAccountDetail = await BusinessAccount.find({
-      userId: buisness_owner_id,
-    });
-    if (buisnessAccountDetail.length > 0) {
-      let saved = await BusinessAccount.updateOne(
-        { _id: buisnessAccountDetail[0]._id },
-        {
-          $set: {
-            subsriptionId: subsriptionId,
-            subscription_price: subscription_price,
-            subscription_name: subscription_name,
-            subscription_plan_type: subscription_plan_type,
-            subscribedAt: moment().format("YYYY-MM-DD"),
-            subscription_expire_at: "2023-04-13",
-          },
-        }
-      );
-      if (saved) {
-        res.status(200).send({ data: "Subscription buy successfully" });
-      } else {
-        res.status(400).send("Something went wrong");
+
+    let saved = await User.updateOne(
+      { _id: user[0]._id },
+      {
+        $set: {
+          subsriptionId: subsriptionId,
+          subscription_price: subscription_price,
+          subscription_name: subscription_name,
+          subscribedAt: moment().format("YYYY-MM-DD"),
+          subscription_expire_at: "2023-09-13",
+        },
+      },
+      {
+        new: true
       }
+    );
+    if (saved) {
+      res.status(200).send({ message: "Subscription buy successfully" });
     } else {
-      res
-        .status(200)
-        .send({ data: "Only buisness account owner can buy a subscription" });
+      res.status(400).send("Something went wrong");
     }
+
   } catch (err) {
     console.log(err);
     res.status(400).send(err);

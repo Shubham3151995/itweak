@@ -3,7 +3,8 @@ const { stripeTestSecretKey } = require("../config/appConfig");
 const stripe = require("stripe")(stripeTestSecretKey);
 const moment = require("moment");
 const { nodeEnv } = require("../config/appConfig");
-
+const axios = require('axios');
+const qs = require('qs');
 const createConnectAccount = async ({
   email,
   city,
@@ -117,16 +118,50 @@ const updateAccount = async (stripeAccountId, update) => {
 };
 
 const createCustomer = async ({ name, email }) => {
-  // console.log(name, email);
   const customer = await stripe.customers.create({
     name,
     email,
-    // address,
-    // metadata,
   });
 
   return customer;
 };
+
+const createToken = async () => {
+
+  let data = qs.stringify({
+    'card[number]': '4242424242424242',
+    'card[exp_month]': '7',
+    'card[exp_year]': '2024',
+    'card[cvc]': '314'
+  });
+
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://api.stripe.com/v1/tokens',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic c2tfdGVzdF81MUp6a1NyRFdkR1U1OWxZV2dUbnByNFU1c0RLR3IxbnFYdFV0aHNKN05XS2N6Q3ZycE5mdFVBcTRIelNKS2h0dmw5b2RRQTZublB5Q2ROWlJZS05DOHhtSDAwQ3BMaXhLb0s6',
+      'Cookie': '__stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fdashboard.stripe.com%2Ftest%2Flogs%2Freq_8qWeqq9FLihAmN%3Ft%3D1684248274%22%7D; cid=09fde8cc-c5f3-439f-969a-7f373fcd986d; machine_identifier=putyz66Nr96%2F7EWH%2Bka%2FYu8vJV4nH93WutroK2qmdgQus2CcWv7%2Biopl5JwSuDL20dY%3D; private_machine_identifier=BHVKlq6MczdDHshrQNOYdFzAeJStjRVo7EuwAVvjnIm8VuPEkJ3TE9aCHV0WYqjbcec%3D; __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Fsetup%2Fe%2Facct_1MFYtQDEBqF6FmqD%2Fx8qMxsjE4Buh%22%7D; machine_identifier=JQIi6cO28gHMaQUibCpd2rdJn3KPr54nN1qFPAqBow4YJyaFxV5RMAQiY62Yuw4OXc4%3D; private_machine_identifier=L833dXHt%2FTM0njuN59U50g7T2JvPTG%2F4HDmS6AMM4GdoFAQ0wbLuzI6NgIxO5Pcem%2Bw%3D'
+    },
+    data: data
+  };
+  let a = await axios.request(config)
+  return a.data;
+
+
+  // const token = await stripe.tokens.create({
+  //   card: {
+  //     number: number,
+  //     exp_month: exp_month,
+  //     exp_year: exp_year,
+  //     cvc: cvc,
+  //   },
+  // });
+  // return token;
+}
+
+
 
 const getCustomer = async (stripeCustomerId) => {
   const customer = await stripe.customers.retrieve(stripeCustomerId);
@@ -309,12 +344,12 @@ const createStripeProductPrice = async (price, duration, productId) => {
 };
 const stripeSubcription = async (customerStripeId, priceId) => {
   let date = new Date();
-  let currentDate = new Date().getTime() / 1000;
-  currentDate = currentDate.toFixed();
+  let currentDate = Date.now();
+  // currentDate = currentDate.toFixed();
   const subscription = await stripe.subscriptions.create({
     customer: customerStripeId,
     items: [{ price: priceId }],
-    billing_cycle_anchor: currentDate,
+    // billing_cycle_anchor: "now",
   });
   return subscription;
 };
@@ -346,4 +381,5 @@ module.exports = {
   createStripeProductPrice,
   stripeSubcription,
   deleteStripeProduct,
+  createToken
 };

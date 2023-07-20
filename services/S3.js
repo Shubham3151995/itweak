@@ -35,10 +35,10 @@ exports.getImage = (fileKey) => {
 
 exports.deleteImage = async (file) => {
   // console.log(file, "File came");
-  if (file.public_id) {
+  if (file) {
     const image = {
-      Bucket: file.bucket,
-      Key: file.public_id,
+      Bucket: bucket,
+      Key: file,
     };
     // console.log(image, "image")
     const response = await s3.deleteObject(image, (err, data) => {
