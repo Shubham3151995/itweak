@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/Users");
-const { accessTokenSecret } = require("../config/appConfig");
+// const { accessTokenSecret } = require("../config/appConfig");
 
 const verifyJWT = (req, res, next) => {
   // Get auth header
@@ -16,8 +16,7 @@ const verifyJWT = (req, res, next) => {
 
   // Verify extracted access token
   jwt.verify(token, "secret", async (err, decoded) => {
-    if (err)
-      return res.status(403).json({ message: "Forbidden" });
+    if (err) return res.status(403).json({ message: "Forbidden" });
 
     const userData = decoded.data.contact;
     if (!userData) return res.sendStatus(404);
