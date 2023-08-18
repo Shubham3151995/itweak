@@ -1,63 +1,74 @@
-import React from 'react';
-import { SafeAreaView, TouchableOpacity, Text, Keyboard, View, StyleSheet, StatusBar, Platform } from 'react-native';
-import { useSelector } from 'react-redux';
-// import LoadingComp from './components/reuse/LoadingComp';
-import { RootState } from './redux/reducers';
+import React from "react";
+import {
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+  Keyboard,
+  View,
+  StyleSheet,
+  StatusBar,
+  Platform,
+} from "react-native";
+import { useSelector } from "react-redux";
+import LoadingComp from "./Reuse/LoadingComp";
+import { RootState } from "./redux/reducers";
 // import { getIcons, Icons } from './assets/Icons';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
-import Config from './utils/Config'
+import { moderateScale, verticalScale } from "react-native-size-matters";
+import Config from "./utils/Config";
 import { scale } from "react-native-size-matters";
-
-
 
 /**
  * HOC for including reusable UI logic
  */
 
 const HOC = (ChildComponent: React.FC): React.FC => {
-    function InnerHOC(props: any) {
-        const state = useSelector(
-            (state: RootState) => state
-        );
-        const loadingStatus = useSelector(
-            (state: RootState) => state.LoadingReducer.loadingStatus,
-        );
-        console.log("next state====>",state);
-        
-        return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: Config.colors.AppColor,paddingHorizontal:scale(10) }}>
-                
-                <StatusBar translucent backgroundColor={Config.colors.white} barStyle="dark-content" />
-                <View style={
-                    {
-                        width:scale(130),
-                        height:"100%",
-                        backgroundColor:Config.colors.secondAppColor,
-                        position:'absolute',
-                        left:scale(-10)
+  function InnerHOC(props: any) {
+    const state = useSelector((state: RootState) => state);
+    const loadingStatus = useSelector(
+      (state: RootState) => state.LoadingReducer.loadingStatus
+    );
+    console.log("next state====>", state);
 
-                    }}></View>
-                     <View style={
-                    {
-                        width:scale(130),
-                        height:"50%",
-                        backgroundColor:Config.colors.white,
-                        position:'absolute',
-                        left:scale(-10)
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: Config.colors.AppColor,
+          paddingHorizontal: scale(10),
+        }}
+      >
+        <StatusBar
+          translucent
+          backgroundColor={Config.colors.white}
+          barStyle="dark-content"
+        />
+        <View
+          style={{
+            width: scale(130),
+            height: "100%",
+            backgroundColor: Config.colors.secondAppColor,
+            position: "absolute",
+            left: scale(-10),
+          }}
+        ></View>
+        <View
+          style={{
+            width: scale(130),
+            height: "50%",
+            backgroundColor: Config.colors.white,
+            position: "absolute",
+            left: scale(-10),
+          }}
+        ></View>
+        <ChildComponent />
 
-                    }}></View>
-                <ChildComponent />
-
-                {/* {loadingStatus ? <LoadingComp /> : null} */}
-            </SafeAreaView>
-        );
-    }
-    return InnerHOC;
+        {loadingStatus ? <LoadingComp /> : null}
+      </SafeAreaView>
+    );
+  }
+  return InnerHOC;
 };
 
-const styles = StyleSheet.create({
-    
-   
-})
+const styles = StyleSheet.create({});
 
 export default HOC;

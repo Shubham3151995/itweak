@@ -1,8 +1,8 @@
 import { Platform } from 'react-native'
 export default {
-  // server: {
-  //   BASE_URL: LOCAL_URL,
-  // },
+  server: {
+    BASE_URL: "http://13.57.25.126:3000",
+  },
 
   fonts: {
     BOLD: 'BigShouldersDisplay-Bold',

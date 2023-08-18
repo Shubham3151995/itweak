@@ -175,7 +175,7 @@ const getAPIHeader = (token?: string, isUrlEncoded?: boolean) => {
     "Content-Type": "application/json",
     "authorization": 'Bearer ' + token
   } : {
-    "Accept": "application/json",
+    "Accept": "application/json, text/plain, */*",
     "Content-Type": "application/json"
   }
 };
