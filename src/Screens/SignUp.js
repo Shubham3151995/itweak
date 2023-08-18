@@ -16,11 +16,14 @@ import Button from "../Reuse/Button";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { RegisterAction } from "../redux/actions/AuthActions";
+import { validateSignUp } from "../utils/ValidationHelper";
 
 const SignUp = () => {
   const [name, setName] = useState("");
+  const [lname, setLName] = useState("");
   const [email, setEmail] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -28,13 +31,32 @@ const SignUp = () => {
   let passwordRef = useRef();
 
   const onSignUpPress = async () => {
-    const data = {
+    const validDationData = {
+      fname: name,
+      lname: lname,
       email: email,
-      name: name,
       password: password,
-      confirm_password: confirm_password,
+      confirmPassword: confirm_password,
     };
-    const res = await dispatch(RegisterAction(JSON.stringify(data)));
+    const res = await validateSignUp(validDationData);
+    if (res.code == 200) {
+      const data = {
+        email: email,
+        name: name + " " + lname,
+        password: password,
+        confirm_password: confirm_password,
+      };
+      const resSignUp = await dispatch(RegisterAction(JSON.stringify(data)));
+      if (resSignUp.code == 200) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "CreateProfile" }],
+        });
+      }
+    } else {
+      console.log("error===>", res);
+      setError(res.validationObject);
+    }
   };
   return (
     <KeyboardAwareScrollView
@@ -60,7 +82,7 @@ const SignUp = () => {
         </View>
 
         <View style={styles.EmailPasswordView}>
-          <Text style={styles.text}>NAME</Text>
+          <Text style={styles.text}>FIRST NAME</Text>
           <TextInputComp
             placeholder="Enter Name"
             value={name}
@@ -69,6 +91,18 @@ const SignUp = () => {
             onSubmitEditing={() => {
               passwordRef.focus();
             }}
+            validationMessage={error?.fnameError}
+          />
+          <Text style={styles.text}>LAST NAME</Text>
+          <TextInputComp
+            placeholder="Enter Name"
+            value={lname}
+            onChangeText={(txt) => setLName(txt)}
+            returnKeyType={"next"}
+            onSubmitEditing={() => {
+              passwordRef.focus();
+            }}
+            validationMessage={error?.lnameError}
           />
           <Text style={styles.text}>EMAIL ADDRESS</Text>
           <TextInputComp
@@ -80,6 +114,7 @@ const SignUp = () => {
             onSubmitEditing={() => {
               passwordRef.focus();
             }}
+            validationMessage={error?.emailError}
           />
           <Text style={[styles.text, { marginTop: verticalScale(10) }]}>
             PASSWORD
@@ -96,6 +131,7 @@ const SignUp = () => {
             onSubmitEditing={() => {
               Keyboard.dismiss();
             }}
+            validationMessage={error?.passwordError}
           />
           <Text style={[styles.text, { marginTop: verticalScale(10) }]}>
             CONFIRM PASSWORD
@@ -112,6 +148,7 @@ const SignUp = () => {
             onSubmitEditing={() => {
               Keyboard.dismiss();
             }}
+            validationMessage={error?.confirmPasswordError}
           />
 
           <Button

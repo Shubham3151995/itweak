@@ -16,12 +16,39 @@ import Button from "../Reuse/Button";
 import SignUp from "./SignUp";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Modal from "../Reuse/Modal";
+import { validateLogin } from "../utils/ValidationHelper";
+import { LoginAction } from "../redux/actions/AuthActions";
+import { useSelector, useDispatch } from "react-redux";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigation = useNavigation();
   let passwordRef = useRef();
+  const dispatch = useDispatch();
+
+  const onLogin = async () => {
+    const data = {
+      email: email,
+      password: password,
+    };
+    const res = await validateLogin(data);
+
+    if (res.code == 200) {
+      const loginRes = await dispatch(LoginAction(JSON.stringify(data)));
+      if (loginRes.code == 200) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        });
+      }
+    } else {
+      console.log("error===>", res);
+      setEmailError(res.validationObject);
+    }
+  };
   return (
     <KeyboardAwareScrollView
       enableAutomaticScroll={Platform.OS === "ios" ? true : true}
@@ -50,12 +77,16 @@ const LoginScreen = () => {
           <TextInputComp
             placeholder="Enter Email Address"
             value={email}
-            onChangeText={(txt) => setEmail(txt)}
+            onChangeText={(txt) => {
+              setEmail(txt);
+              setEmailError({ ...emailError, emailError: null });
+            }}
             keyboardType={"email-address"}
             returnKeyType={"next"}
             onSubmitEditing={() => {
               passwordRef.focus();
             }}
+            validationMessage={emailError?.emailError}
           />
           <Text style={[styles.text, { marginTop: verticalScale(10) }]}>
             PASSWORD
@@ -64,7 +95,10 @@ const LoginScreen = () => {
             secureTextEntry={true}
             placeholder="Enter Password"
             value={password}
-            onChangeText={(txt) => setPassword(txt)}
+            onChangeText={(txt) => {
+              setPassword(txt);
+              setEmailError({ ...emailError, passwordError: null });
+            }}
             keyboardType={"email-address"}
             getInputRef={(ref) => (passwordRef = ref)}
             returnKeyType={"done"}
@@ -72,6 +106,7 @@ const LoginScreen = () => {
             onSubmitEditing={() => {
               Keyboard.dismiss();
             }}
+            validationMessage={emailError?.passwordError}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate("ResetPassword")}
@@ -87,7 +122,8 @@ const LoginScreen = () => {
           </TouchableOpacity>
           <Button
             onPress={() => {
-              navigation.navigate("Home");
+              // onLogin();
+              navigation.navigate("CreateProfile");
             }}
             text={"SIGN IN"}
             style={{ marginTop: verticalScale(20) }}

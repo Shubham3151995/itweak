@@ -37,32 +37,37 @@ export default {
     nameRegEx: /^([a-zA-Z]+\s)*[a-zA-Z]+$/,
     numericRegEx: /\d/,
     specialCharRegEx: /[^a-zA-Z ]/,
+    spaceRegEx: /^\S+$/,
   },
   error: {
     error_internet_connection:
-      'Something went wrong!! Please check your internet and try again',
-    error_empty_first_name: 'Please enter Name',
-    error_first_name_numeric: 'Name cannot have numeric values',
-    error_first_name_specialChar: 'Name cannot have special characters',
+      "It seems that you are offline.",
+    error_empty_first_name: 'Please enter first name',
+    error_first_name_numeric: 'First name cannot have numeric values',
+    error_first_name_specialChar: 'First name cannot have special characters',
     error_first_name_long:
-      'Name field cannot have more than 100 characters',
-    error_empty_know_from: 'Please enter Know From',
-    error_know_from_long:
-      'Know from field cannot have more than 200 characters',
-    error_bgcolor: 'Please select any color',
-    error_empty_characteristic: 'Please enter Characteristic',
-    error_characteristic_long:
-      'Characteristic field cannot have more than 500 characters',
-    error_empty_info: 'Please enter Info',
-    error_info_long:
-      'Info field cannot have more than 500 characters',
-    error_empty_notes: 'Please enter Notes',
-    error_notes_long:
-      'Notes field cannot have more than 500 characters',
-    error_empty_email: 'Please enter the email',
+      'First name field cannot have more than 25 characters',
+    error_first_name_space:
+      'First name cannot contain whitespace',
+    error_empty_lats_name: 'Please enter last name',
+    error_last_name_numeric: 'Last name cannot have numeric values',
+    error_last_name_specialChar: 'Last name cannot have special characters',
+    error_last_name_long:
+      'Last name field cannot have more than 25 characters',
+    error_empty_email: 'Please enter email',
     error_invalid_email: 'Please enter a valid email address',
-    error_empty_Cat_title: 'Please enter Title',
-    error_empty_Cat_bgcolor: 'Please select any color',
+    error_empty_password: 'Please enter password',
+    error_empty_confirm_password: 'Please enter confirm password',
+    error_password_length: "Password must be greater than 8 and less than 32",
+    error_password_not_Match: 'Confirm password not match',
+    error_empty_name: 'Please enter full name',
+    error_first_numeric: 'Full name cannot have numeric values',
+    error_first_specialChar: 'Full name cannot have special characters',
+    error_first_long:
+      'Full name field cannot have more than 50 characters',
+    error_empty_comment: "Please enter comment",
+    error_last_name_space:
+      'Last name cannot contain whitespace',
   },
 
 };

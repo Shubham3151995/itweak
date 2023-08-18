@@ -152,6 +152,8 @@ export const LoginAction = (data: any) => {
       );
       if (Result.code == 200) {
         dispatch(setAccessToken(Result.response.access_token))
+      }else{
+showAlert(Result.error.message)
       }
       console.log("Login===>", Result);
 
@@ -160,7 +162,7 @@ export const LoginAction = (data: any) => {
 
     } catch (error) {
       dispatch(setLoading(false));
-      showAlert(error)
+      
       return Result
 
     }
